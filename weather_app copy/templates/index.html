@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App with Clothing Suggestions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .weather-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .clothing-suggestions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .clothing-suggestions img {
+            width: 200px;
+            height: auto;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .clothing-suggestions img:hover {
+            transform: scale(1.05);
+        }
+        .error-message {
+            text-align: center;
+            color: red;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather App with Clothing Suggestions</h1>
+        <form method="POST" action="/">
+            <input type="text" name="city" placeholder="Enter city" value="{{ city }}">
+            <input type="submit" value="Get Weather">
+        </form>
+        {% if error_message %}
+            <div class="error-message">
+                <p>{{ error_message }}</p>
+            </div>
+        {% else %}
+            <div class="weather-info">
+                <h2>Weather in {{ city }}</h2>
+                {% if weather %}
+                    <p>Temperature: {{ weather.main.temp }} °C</p>
+                    <p>Condition: {{ weather.weather[0].description }}</p>
+                {% endif %}
+            </div>
+            <div class="clothing-suggestions">
+                <h3>Clothing Suggestions</h3>
+                {% for image_url in images %}
+                    <img src="{{ image_url }}" alt="Clothing suggestion">
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
